@@ -1,0 +1,653 @@
+#include<Windows.h>
+#include<iostream>
+#pragma comment(lib, "winmm.lib")
+#include<string>
+using namespace std;
+
+//global variables
+string inventory[10];
+int coins = 100;
+
+//function decliration 
+void BattleSystem();
+int MonsterGen();
+void itemDropper();
+void Shop();
+void PetGen();
+void FinalFight();
+
+int PlayerHealth = 100; //global variable!
+int MoHealth = 400;
+
+//function declarations
+
+
+int main() {
+	//intitialize it with all empty spaces
+	for (int i = 0; i < 10; i++)
+		inventory[i] = " ";
+
+
+
+	srand(time(NULL)); //randomizes seed based on computers clock
+
+	cout << "you're in an abandoned broken down house. You have lost your memory and have no clue about how you ended up here.  " << endl;
+	cout << " " << endl;
+	cout << "there is a dog next to you who seems to like you a lot. However, he seems to only respond to Tyrone." << endl;
+	cout << " " << endl;
+	cout << "You decide to go through the house to try and regain your memory (use i and d throught the game to view your inventory and pet your dog)" << endl;
+	cout << " " << endl;
+	int room = 1;
+	string direction = "a";
+	bool key1 = false;
+	int affinity = 0;
+
+
+	while (direction != "q" && PlayerHealth > 0 && MoHealth > 0) { //GAME LOOP
+
+		//print out inventory
+		//cout << "your inventory:" << endl;
+		//for (int i = 0; i < 10; i++)
+			//cout << inventory[i] << " ";
+		//cout << endl;
+
+		switch (room) {
+		case 1:
+			cout << "You seem to be in the living room right now with an empty inventory and a small dog who seems to like you. You can go   east." << endl;
+			cout << "(room 1)" << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("e") == 0 || direction.compare("east") == 0 || direction.compare("East") == 0 || direction.compare("E") == 0 || direction.compare("go east") == 0 || direction.compare("Go east") == 0)
+				room = 2;
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			break;
+
+		case 2:
+			cout << "youre in a dim lighted room with nothing in it. You can go south or west." << endl;
+			cout << "(room 2)" << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("s") == 0 || direction.compare("south") == 0 || direction.compare("S") == 0 || direction.compare("South") == 0 || direction.compare("go south") == 0 || direction.compare("Go south") == 0)
+				room = 3;
+			else if (direction.compare("w") == 0 || direction.compare("W") == 0 || direction.compare("west") == 0 || direction.compare("West") == 0 || direction.compare("go west") == 0 || direction.compare("Go west") == 0)
+				room = 1;
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			break;
+
+		case 3:
+			cout << "you're in a room with a creepy doll sitting in the corner. You can go south or north." << endl;
+			cout << "(room 3)" << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("s") == 0 || direction.compare("south") == 0 || direction.compare("S") == 0 || direction.compare("South") == 0 || direction.compare("go south") == 0 || direction.compare("Go south") == 0)
+				room = 4;
+			else if (direction.compare("n") == 0 || direction.compare("N") == 0 || direction.compare("north") == 0 || direction.compare("North") == 0 || direction.compare("go north") == 0 || direction.compare("Go north") == 0)
+				room = 2;
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			break;
+
+		case 4:
+			cout << "you're in a room that looks exactly the same as the last room, but there are two dolls now. You can go east or north." << endl;
+			cout << "(room 4)" << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("e") == 0 || direction.compare("east") == 0 || direction.compare("East") == 0 || direction.compare("E") == 0 || direction.compare("go east") == 0 || direction.compare(" Go east") == 0)
+				room = 5;
+			else if (direction.compare("n") == 0 || direction.compare("N") == 0 || direction.compare("north") == 0 || direction.compare("North") == 0 || direction.compare("go north") == 0 || direction.compare("Go north") == 0)
+				room = 3;
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			break;
+
+		case 5:
+			cout << "you're in a room filled with dolls, you see an old creeky stair case leading downstairs. You can go west or down the    stairs." << endl;
+			cout << "(room 5)" << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("w") == 0 || direction.compare("W") == 0 || direction.compare("west") == 0 || direction.compare("West") == 0 || direction.compare("go west") == 0 || direction.compare("Go west") == 0)
+				room = 4;
+			if (direction.compare("s") == 0 || direction.compare("stairs") == 0 || direction.compare("Stairs") == 0 || direction.compare("S") == 0)
+				room = 6;
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			break;
+
+		case 6:
+			cout << "you look around, you see a chair, desk, and an old broken down ceeling fan. It looks as though you are in the houses    basement. You can go up the stairs again or go south." << endl;
+			cout << "(room 6)" << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("stairs") == 0 || direction.compare("Stairs") == 0)
+				room = 5;
+			if (direction.compare("s") == 0 || direction.compare("south") == 0 || direction.compare("S") == 0 || direction.compare("South") == 0 || direction.compare("go south") == 0 || direction.compare("Go south") == 0)
+				room = 7;
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			break;
+
+		case 7:
+			cout << "this room has nothing in it, but you get an eerie feeling. You can go north or east." << endl;
+			cout << "(room 7)" << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("n") == 0 || direction.compare("north") == 0 || direction.compare("North") == 0 || direction.compare("go north") == 0 || direction.compare("Go north") == 0)
+				room = 6;
+			if (direction.compare("e") == 0 || direction.compare("east") == 0 || direction.compare("East") == 0 || direction.compare("E") == 0 || direction.compare("go east") == 0 || direction.compare(" Go east") == 0)
+				room = 8;
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			break;
+
+		case 8:
+			cout << "you're in a dark room, you can just barely see a light at the end of the room. You can go west or east." << endl;
+			cout << "(room 8)" << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("w") == 0 || direction.compare("W") == 0 || direction.compare("west") == 0 || direction.compare("West") == 0 || direction.compare("go west") == 0 || direction.compare("Go west") == 0)
+				room = 7;
+			if (direction.compare("e") == 0 || direction.compare("east") == 0 || direction.compare("East") == 0 || direction.compare("E") == 0 || direction.compare("go east") == 0 || direction.compare(" Go east") == 0)
+				room = 9;
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			break;
+
+		case 9:
+			getline(cin, direction);
+			if (affinity >= 150) {
+				inventory[0] = "key";
+				cout << "you're in a room with 2 pathways in front of you. You can go west, north, or locked door." << endl;
+				cout << "Tyrone woofs and drops a key at your feet. Maybe you can use it for that locked door" << endl;
+				cout << "(room 9)" << endl;
+				cout << " " << endl;
+			}
+			else if (affinity >= 90) {
+				cout << "you're in a room with 2 pathways in front of you. You can go west, north, or locked door. Tyrone looks at the door that's north and barks." << endl;
+				cout << "(room 9)" << endl;
+				cout << " " << endl;
+			}
+			else {
+				cout << "you're in a room with 2 pathways in front of you. You can go west, north, or locked door." << endl;
+				cout << "(room 9)" << endl;
+				cout << " " << endl;
+			}
+
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			if (direction.compare("w") == 0 || direction.compare("W") == 0 || direction.compare("west") == 0 || direction.compare("West") == 0 || direction.compare("go west") == 0 || direction.compare("Go west") == 0)
+				room = 8;
+			if (direction.compare("n") == 0 || direction.compare("N") == 0 || direction.compare("north") == 0 || direction.compare("North") == 0 || direction.compare("go north") == 0 || direction.compare("Go north") == 0)
+				room = 10;
+			if (direction == "L" || direction.compare("l") == 0 || direction.compare("use key") == 0 || direction.compare("Use key") == 0 || direction.compare("locked door") == 0 || direction.compare("Locked door") == 0 || direction.compare("unlock door") == 0 || direction.compare("Unlock door") == 0)
+				if (inventory[0] == "key") {
+					room = 11;
+					cout << "You unlocked the door" << endl;
+					//inventory[0] = " "; //get rid of key
+				}
+				else
+					cout << "The door is locked." << endl;
+			break;
+
+		case 10:
+			cout << "you're in an empty broken down room. You can go south." << endl;
+			cout << "(room 10)" << endl;
+			cout << " " << endl;
+			if (inventory[0] != "key")
+				cout << "Oh wait, you see a shiny key in the corner." << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			if (direction.compare("s") == 0 || direction.compare("south") == 0 || direction.compare("S") == 0 || direction.compare("South") == 0 || direction.compare("go south") == 0 || direction.compare("Go south") == 0)
+				room = 9;
+			if (direction == "k" || direction.compare("key") == 0 || direction.compare("Key") == 0 || direction.compare("K") == 0 || direction.compare("pick up") == 0 || direction.compare("Pick up") == 0 || direction.compare("pick up key") == 0 || direction.compare("Pick up key") == 0) {
+				cout << "you got a shiny key!" << endl;
+				inventory[0] = "key";
+			}
+			break;
+
+		case 11:
+
+			cout << "you're in a room made of stone with a metal door at the end, you feel and eerie feeling as you aprouch the door." << endl;
+			cout << "theres a treasure chest in the corner of the room, but be careful it could be a trap..." << endl;
+			cout << "(room 11)" << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0) {
+				//print out inventory
+				cout << "your inventory:" << endl;
+				for (int i = 0; i < 10; i++)
+					cout << inventory[i] << " ";
+				cout << endl;
+			}
+			if (direction.compare("w") == 0 || direction.compare("W") == 0 || direction.compare("west") == 0 || direction.compare("West") == 0 || direction.compare("go west") == 0 || direction.compare("Go west") == 0)
+				room = 9;
+			if (direction.compare("m") == 0 || direction.compare("M") == 0 || direction.compare("metal door") == 0 || direction.compare("Metal door") == 0 || direction.compare("metal") == 0 || direction.compare("Metal") == 0)
+				room = 12;
+			if (direction.compare("t") == 0 || direction.compare("T") == 0 || direction.compare("chest") == 0 || direction.compare("Chest") == 0 || direction.compare("Open chest") == 0 || direction.compare("open chest") == 0) {// the player types "t" for this to run
+				itemDropper();
+				BattleSystem();//function call
+			}
+			break;
+
+		case 12:
+			cout << "there is a very old man in the corner and an open doorway at the end of the room." << endl;
+			cout << "(room 12)" << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("o") == 0 || direction.compare("O") == 0 || direction.compare("old man") == 0 || direction.compare("Old man") == 0 || direction.compare("talk") == 0 || direction.compare("Talk") == 0)
+				Shop();//call the function
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("open doorway") == 0 || direction.compare("Open doorway") == 0 || direction.compare("doorway") == 0 || direction.compare("Doorway") == 0)
+				room = 13;
+			if (direction.compare("w") == 0 || direction.compare("W") == 0 || direction.compare("west") == 0 || direction.compare("West") == 0 || direction.compare("go west") == 0 || direction.compare("Go west") == 0)
+				room = 11;
+			break;
+
+		case 13:
+
+			cout << "This room has nothing but a very old picture of a sword." << endl;
+			cout << "(room 13)" << endl;
+			cout << " " << endl;
+			system("pause");
+			cout << "                 /| ________________" << endl;
+			cout << "	O |= ==|* > ________________ >" << endl;
+			cout << "	         ||" << endl;
+			cout << "                  -           " << endl;
+			cout << " " << endl;
+			system("pause");
+			cout << " " << endl;
+			cout << "This picture looks exactly like the sword that old man was selling in the room before. On the frame of the painting it  says Sword of Prohpicy." << endl;
+			cout << " " << endl;
+			system("pause");
+			cout << " " << endl;
+			cout << "seeing this picture... this sword... you start to remember everything." << endl;
+			cout << "you need to get back to your village and stop DARK MO." << endl;
+			cout << " " << endl;
+			system("pause");
+			cout << " " << endl;
+			cout << "with your regained memories and the Sword of Prophecy in hand, you unlock new found powers." << endl;
+			cout << " " << endl;
+			system("pause");
+			cout << " " << endl;
+			cout << "you wont be able to go back from this point on... do you wish to use your powers to teleport to teleport to your old    village..." << endl;
+			cout << " " << endl;
+			getline(cin, direction);
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0) {
+				affinity += 10;
+				PetGen();
+				cout << "The dogs affinity towards you has raised by 10. Its affinity is now " << affinity << endl;
+			}
+			if (direction.compare("v") == 0 || direction.compare("V") == 0 || direction.compare("village") == 0 || direction.compare("Village") == 0 || direction.compare("yes") == 0 || direction.compare("Yes") == 0)
+				room = 14;
+			if (direction.compare("D") == 0 || direction.compare("d") == 0 || direction.compare("dog") == 0 || direction.compare("Dog") == 0 || direction.compare("tyrone") == 0 || direction.compare("Tyrone") == 0)
+				room = 13;
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			break;
+
+		case 14:
+			cout << "you teleport to your village and DARK MO's magical shed it floating over your village" << endl;
+			cout << "you jump up to the shed and enter to be greated by DARK MO herself, the battle commences" << endl;
+			FinalFight();
+			getline(cin, direction);
+
+
+
+			if (direction.compare("i") == 0 || direction.compare("I") == 0 || direction.compare("inventory") == 0 || direction.compare("Inventory") == 0)
+				//print out inventory
+				cout << "your inventory:" << endl;
+			for (int i = 0; i < 10; i++)
+				cout << inventory[i] << " ";
+			cout << endl;
+			break;
+
+
+
+
+		default:
+			cout << "you should never see this!" << endl;
+		}// end of switch
+	} // end of gameloop
+
+	if (MoHealth <= 0)
+		cout << " Game over, you won, Mo was banished to the shadow realm!" << endl;
+	else
+		cout << "Game over, you died :(" << endl;
+
+}// end of main
+
+void BattleSystem() {
+	int MonsterType = MonsterGen();
+	int MonsterHealth = 0;
+	int MonsterDMG = 0;
+	int PlayerDMG = 0;
+
+	// set monsters health depending on the type 
+	if (MonsterType == 1) {//skeleton
+		MonsterHealth = 30;
+	}
+
+	if (MonsterType == 2) { //spider
+		MonsterHealth = 25;
+	}
+
+	if (MonsterType == 3) { //zombie
+		MonsterHealth = 35;
+	}
+
+	if (MonsterType == 4) { //golem
+		MonsterHealth = 45;
+	}
+
+	if (MonsterType == 5) { //ghost
+		MonsterHealth = 20;
+	}
+
+	//set the monster"s damage depending on what type
+	if (MonsterType == 1) { //skeleton
+		MonsterDMG = rand() % 20 + 1;
+	}
+
+	if (MonsterType == 2) { //spider
+		MonsterDMG = rand() % 6 + 5;
+	}
+
+	if (MonsterType == 3) { //zombie
+		MonsterDMG = rand() % 15 + 1;
+	}
+
+	if (MonsterType == 4) { //golem
+		MonsterDMG = rand() % 16 + 5;
+	}
+
+	if (MonsterType == 5) { //ghost
+		MonsterDMG = rand() % 10 + 1;
+	}
+
+	while (MonsterHealth > 0 && PlayerHealth > 0) {
+		if (inventory[6] == "armor") {
+			MonsterDMG /= 2;
+			cout << "the monster attacked you, but your armor took a lot of damage. You only took " << MonsterDMG << " damage" << endl;
+			PlayerHealth -= MonsterDMG;
+
+		}
+		else {
+			cout << "Monster bites you for " << MonsterDMG << "HP" << endl;
+			PlayerHealth -= MonsterDMG;
+			PlayerDMG = rand() % 76; //Your attack is between 0 and 75
+		}
+		if (inventory[4] == "Sword Of Prophicy") {
+			PlayerDMG = rand() % 100 + 50;
+		}
+		else {
+			PlayerDMG = rand() % 100;
+		}
+		//if (inventory[5] == "potion ")
+		cout << "You counter the monster for " << PlayerDMG << "HP" << endl << endl;
+		MonsterHealth -= PlayerDMG;
+		system("pause");
+		cout << "Your health is now: " << PlayerHealth << endl;
+		cout << "The monsters health is now: " << MonsterHealth << endl;
+		system("pause");
+
+	}
+
+	if (MonsterHealth <= 0)
+		cout << "You beat the monster" << endl;
+	else
+		cout << "Game over, you died :(" << endl;
+}
+
+//function definitions
+int MonsterGen() {
+	int num = rand() % 100; // creates a number from 0-99
+	if (num < 15) {//15% chance
+		cout << "a skeleton spawned!" << endl;
+		return 1;
+	}
+	else if (num < 20) {//5% chance
+		cout << "a spider crawls towards you." << endl;
+		cout << "it jumps at you." << endl;
+		return 2;
+	}
+
+	else if (num < 50) {//30%
+		cout << "a zombie stumbles forward." << endl;
+		cout << "it chomps towards you." << endl;
+		return 3;
+	}
+	else if (num < 75) {//25% chance
+		cout << "a golem rumbles towards you." << endl;
+		cout << "it slams the floor infront of you." << endl;
+		return 4;
+	}
+	else if (num < 100) {//25% chance
+		cout << "a ghost floats through your body." << endl;
+		cout << "it gives you the chills." << endl;
+		return 5;
+	}
+
+}
+
+void itemDropper() {
+	int num = rand() % 100; //b/t 0-99
+	if (num < 25) {
+		cout << "you got a dirty sock" << endl;
+		inventory[1] = "sock";
+	}
+	else if (num < 50) {
+		cout << "you got a handful of legos!" << endl;
+		inventory[2] = "legos";
+	}
+	else if (num < 60) {
+		cout << "you got a handful of coins" << endl;
+		coins += 30;
+
+	}
+	else {
+		cout << "you didn't get anything" << endl;
+	}
+}
+
+void Shop() {
+	int input = 4324324;
+	while (input != 0) {
+		system("color 0E");
+		PlaySound(TEXT("Shop.WAV"), NULL, SND_LOOP | SND_ASYNC);
+		cout << "hey..." << endl;
+		cout << "you... its you. I know what will aid you in your quest" << endl;
+		cout << "You seem to have " << coins << " coins" << endl;
+		cout << "items for sale:" << endl;
+		if (inventory[4] != "Sword Of Prophicy") {
+			cout << "(1)sword: 20" << endl;
+		}
+		if (inventory[6] != "armor") {
+			cout << "(2)armor: 80" << endl;
+		}
+		cout << "press 0 to quit" << endl;
+		cin >> input;
+		if (input == 1) {
+			if (coins >= 20) {
+				cout << "you bought a sword!" << endl;
+				cout << " " << endl;
+				inventory[4] = "Sword Of Prophicy";
+				coins -= 20;
+			}
+			else
+				cout << "sorry, youre too broke, goofy" << endl;
+		}
+		if (input == 2) {
+			if (coins >= 80) {
+				cout << "you bought armor" << endl;
+				cout << " " << endl;
+				inventory[6] = "armor";
+				coins -= 80;
+			}
+			else
+				cout << "wow, how are you so broke" << endl;
+		}
+		PlaySound(TEXT("Purchase.WAV"), NULL, SND_FILENAME | SND_ASYNC);
+		system("color 07");
+	}
+}// end of shop function
+
+void PetGen() {
+	int num = rand() % 100;
+	if (num < 20)
+		cout << "Tyron barks and circles around you" << endl;
+	else if (num < 50)
+		cout << "Tyrone licks your hand" << endl;
+	else
+		cout << "Tyrone meows?" << endl;
+}
+
+void FinalFight() {
+	system("color 04");
+	PlaySound(TEXT("FinalMO.WAV"), NULL, SND_LOOP | SND_ASYNC);
+	//int MoHealth = 400;
+	int MoDMG = 0;
+	int PlayerDMG = 0;
+
+	while (MoHealth > 0 && PlayerHealth > 0) {
+		if (inventory[6] == "armor") {
+			MoDMG = rand() % 25 + 15;
+			cout << "MO hits you with OTTER SWARM, but your armor took a lot of damage. You only took " << MoDMG << " damage" << endl;
+			PlayerHealth -= MoDMG;
+
+		}
+		else {
+			MoDMG = rand() % 150 + 100;
+			cout << "MO hits you with TEARS OF STUDENTS, it does " << MoDMG << " HP" << endl;
+			PlayerHealth -= MoDMG;
+			PlayerDMG = rand() % 76; //Your attack is between 0 and 75
+		}
+		if (inventory[4] == "Sword Of Prophicy") {
+			PlayerDMG = rand() % 100 + 50;
+		}
+		else {
+			PlayerDMG = rand() % 100;
+		}
+		//if (inventory[5] == "potion ")
+		cout << "You counter the monster for " << PlayerDMG << " HP" << endl << endl;
+		MoHealth -= PlayerDMG;
+		system("pause");
+		cout << "Your health is now: " << PlayerHealth << endl;
+		cout << "The monsters health is now: " << MoHealth << endl;
+		system("pause");
+
+	}
+
+
+
+
+}
