@@ -1,0 +1,104 @@
+#include<iostream>
+using namespace std;
+
+//global variables
+string items[5];
+int playerhealth = 100;
+
+//function declarations
+void BattleSys();
+
+int main() {
+	srand(time(NULL));
+	int location = 1;
+	string input;
+	while (true) {
+
+		//stuff here happens every turn
+		cout << "your inventory:" << endl;
+		for (int i = 0; i < 5; i++)
+			cout << items[i] << ""; //print the items
+		cout << endl << endl;
+
+		switch (location) {
+		case 1:
+			cout << "room 1, you can go south" << endl;
+			if (items[0] != "sword") {
+				items[0] = "sword";
+				cout << "you got a sword!" << endl;
+			}
+			BattleSys(); //function call
+			cin >> input;
+			break;
+		}
+
+	}
+}
+
+//fu
+void BattleSys() {
+	int monsterhealth = 20;
+	int input;
+	int num;
+	cout << endl << endl << "-----------------------BATTLE TIME!!-----------------------" << endl;
+	while (playerhealth > 0 && monsterhealth > 0) {
+
+		//monster attack
+		if (items[0] == "armor") {
+			num = rand() % 7 + 3;
+			cout << "your armor absorbs the blo you get hit for" << num << " damage!" << endl;
+			monsterhealth -= num;
+		}
+		else {
+			num = rand() % 15 + 12;
+			cout << "the monster bites your bare arm for" << num << " dmg" << endl;
+			monsterhealth -= num;
+		}
+		break;
+
+		//get player's choice:
+		cout << "press 1 to attack, 2 to drink health potion, 3 to try to escape!" << endl;
+		cin >> input;
+
+		switch (input) {
+		case 1:
+			//player attack
+			if (items[0] == "sword") {
+				num = rand() % 10 + 10;
+				cout << "you slash the monsteer with your sword for" << num << " damage!" << endl;
+				monsterhealth -= num;
+			}
+			else {
+				num = rand() % 5 + 2;
+				cout << "you punch the monster for" << num << " dmg" << endl;
+				monsterhealth -= num;
+			}
+			break;
+
+		case 2: //health potion
+			if (items[3] == "potion") {
+				cout << "glug glug!" << endl;
+				playerhealth += 50;
+				items[3] = " "; //erase the potion
+			}
+			else cout << "sorry, you don't have any potions." << endl;
+
+			break;
+
+		case 3://escape
+			num = rand() % 100;
+			if (num > 75) {//25% vchance of escaping
+				cout << "you successfully run away!" << endl;
+
+			}
+			break;
+		default:
+			cout << "sorry that's not an option" << endl;
+		}//end switch
+		cout << "your health:" << playerhealth << endl;
+		cout << "monsther's health:" << monsterhealth << endl;
+	}
+	cout << "end of battle........................." << endl;
+}
+
+
